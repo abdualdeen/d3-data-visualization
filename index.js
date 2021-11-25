@@ -1,8 +1,8 @@
-d3.tsv('state_population_gdp.tsv', (data) => {
-    console.log(data);
+d3.tsv('state_population_gdp.tsv', (...data) => {
+    // console.log(data);
     const height = 400;
     const width = 800;
-    const margin = {top:50, bottom:50, left:50, right:50};
+    const margin = {top:50, bottom:50, left:50, right:20};
 
     const svg = d3.select('#myChart')
         .append('svg')
