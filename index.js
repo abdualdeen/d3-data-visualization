@@ -19,17 +19,18 @@ function onMouseOver(d, i) {
           .attr("y", function(d) { return y(d.population) - 10; })
           .attr("height", function(d) { return height - y(d.population) + 10; });
 
-        g.append("text")
-         .attr('class', 'val') 
-         .attr('x', function() {
-             return x(d.state);
-         })
-         .attr('y', function() {
-             return y(d.population) - 15;
-         })
-         .text(function() {
-             return [d.state + ', ' + d.population];
-         });
+
+        // g.append("text")
+        //  .attr('class', 'val') 
+        //  .attr('x', function() {
+        //      return x(d.state);
+        //  })
+        //  .attr('y', function() {
+        //      return y(d.population) - 15;
+        //  })
+        //  .text(function() {
+        //      return [d.state + ', ' + d.population];
+        //  });
 }
 
 function onMouseOut(d, i) {
@@ -69,11 +70,13 @@ d3.tsv('state_population_gdp.tsv').then(function(data) {
    g.selectAll(".bar")
     .data(data)
     .enter().append("rect")
-    .on("mouseover", onMouseOver) //Add listener for the mouseover event
-    .on("mouseout", onMouseOut)   //Add listener for the mouseout event
     .attr("class", "bar")
     .attr("x", function(d) { return x(d.state); })
     .attr("y", function(d) { return y(d.population); })
     .attr("width", x.bandwidth())
-    .attr("height", function(d) { return height - y(d.population); });
+    .attr("height", function(d) { return height - y(d.population); })
+    .on("mouseover", onMouseOver) //Add listener for the mouseover event
+    .on("mouseout", onMouseOut)   //Add listener for the mouseout event
+    .append('title')
+    .text((d) => d.state + ', ' + d.population);
 });
