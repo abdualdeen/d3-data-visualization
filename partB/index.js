@@ -34,7 +34,6 @@ function onMouseOut(d, i) {
 }
 
 
-
 d3.tsv('state_population_gdp.tsv').then(function(data) {
     console.log(data);
     data.forEach((d) => {
@@ -51,7 +50,7 @@ d3.tsv('state_population_gdp.tsv').then(function(data) {
     .attr("dy", "-5.1em")
     .attr("text-anchor", "end")
     .attr("stroke", "black")
-    .text("Population");
+    .text("GDP");
 
    g.selectAll(".bar")
     .data(data)
@@ -64,5 +63,5 @@ d3.tsv('state_population_gdp.tsv').then(function(data) {
     .on("mouseover", onMouseOver)
     .on("mouseout", onMouseOut)
     .append('title')
-    .text((d) => d.state + ', ' + d.population);
+    .text((d) => d.state + ', ' + d.gdp);
 });
