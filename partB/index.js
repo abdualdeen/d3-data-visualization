@@ -35,7 +35,7 @@ function onMouseOut(d, i) {
 
 
 d3.tsv('state_population_gdp.tsv').then(function(data) {
-    console.log(data);
+    // console.log(data);
     data.forEach((d) => {
         d.population = +d.population;
         d.gdp = +d.gdp;
@@ -64,4 +64,35 @@ d3.tsv('state_population_gdp.tsv').then(function(data) {
     .on("mouseout", onMouseOut)
     .append('title')
     .text((d) => d.state + ', ' + d.gdp);
+
+    d3.select("#sortChart").on("click", function() {
+      data.sort(function(a, b) {
+        return d3.descending(a.gdp, b.gdp)
+      })
+      x.domain(data.map(function(d) {
+        return d.state;
+      }));
+      svg.selectAll(".bar")
+        .transition()
+        .duration(500)
+        .attr("x", function(d, i) {
+          return x(d.state);
+        })
+    
+      svg.selectAll(".val-label")
+        .transition()
+        .duration(500)
+        .attr("x", function(d, i) {
+          return x(d.state) + x.bandwidth() / 2;
+        })
+    
+      svg.selectAll(".bar-label")
+        .transition()
+        .duration(500)
+        .attr("transform", function(d, i) {
+          return "translate(" + (x(d.state) + x.bandwidth() / 2 - 8) + "," + (height + 15) + ")" + " rotate(45)"
+        })
+    })
+    
+
 });
